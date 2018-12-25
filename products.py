@@ -4,7 +4,15 @@ today = str(date.today())
 
 print("這是個記帳軟體，請依照指示輸入，或輸入q離開。")
 products = []
-products.append(["日期", "商品", "價格", "\n"])
+
+with open("products.csv", "r", encoding= "utf-8") as f:
+	for line in f:
+		if "日期, 商品, 價格" in line:
+			continue
+		date, name, price = line.strip().split(",")
+		products.append([date, name, price])
+		print(products)
+
 while True:
 	date = input("請輸入日期(EX, 2018-01-01)，或按Enter直接取得今天日期： ")
 	if date == "q":
@@ -33,7 +41,8 @@ print(products)
 for p in products:
 	print(p[0], p[1], "的價格是", p[2], "元")
 
-with open("products.csv", "w") as f:
+with open("products.csv", "w", encoding= "utf-8") as f:
+	f.write("日期, 商品, 價格\n")
 	for p in products:
 		f.write(p[0] + "," + p[1] + "," + str(p[2]) + "\n")
 		#write 通常會跟著 \n
