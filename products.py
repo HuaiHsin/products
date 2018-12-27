@@ -1,18 +1,23 @@
 from datetime import date
+import os # operating system
 
 today = str(date.today())
 
 print("這是個記帳軟體，請依照指示輸入，或輸入q離開。")
 products = []
+#檢查檔案並讀取檔案
+if os.path.isfile("products.csv"):
+	with open("products.csv", "r", encoding= "utf-8") as f:
+		for line in f:
+			if "日期, 商品, 價格" in line:
+				continue
+			date, name, price = line.strip().split(",")
+			products.append([date, name, price])
+	print(products)
+else:
+	print("找不到現存檔案！")
 
-with open("products.csv", "r", encoding= "utf-8") as f:
-	for line in f:
-		if "日期, 商品, 價格" in line:
-			continue
-		date, name, price = line.strip().split(",")
-		products.append([date, name, price])
-		print(products)
-
+#讓使用者輸入
 while True:
 	date = input("請輸入日期(EX, 2018-01-01)，或按Enter直接取得今天日期： ")
 	if date == "q":
