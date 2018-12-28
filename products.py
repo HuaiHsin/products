@@ -38,6 +38,7 @@ def write_file(filename, products):
 
 def main():
     filename = "products.csv"
+    products= []
     if os.path.isfile(filename):
         print("找到檔案！")
         products = read_file(filename)
